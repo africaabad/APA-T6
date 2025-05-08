@@ -1,6 +1,6 @@
 # Expresiones Regulares
 
-## Nom i cognoms
+## Nom i cognoms: Àfrica Abad
 
 ## Tratamiento de ficheros de notas
 
