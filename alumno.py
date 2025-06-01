@@ -47,17 +47,15 @@ import re
 
 def leeAlumnos(ficAlumnos):
     """
-    Lee el fichero de texto que se le pasa como único 
-    argumento y devuelve un diccionario con los datos de los alumnos.
+    lee un fichero de texto con los datos de todos los alumnos y devuelve
+    un diccionario en el que la clave sea el nombre de cada alumno y su 
+    contenido el objeto Alumno correspondiente.
     
     >>> alumnos = leeAlumnos('alumnos.txt')
     >>> for alumno in alumnos:
     ...     print(alumnos[alumno])
-    ...
-    171     Blanca Agirrebarrenetse 9.5
-    23      Carles Balcells de Lara 4.9
-    68      David Garcia Fuster     7.0
     """
+    
     alumn = {}
     expr_id = r'\s*(?P<id>\d+)\s+'
     expr_nom = r'(?P<nom>[\w\s]+?)\s+'
