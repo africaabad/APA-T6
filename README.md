@@ -249,8 +249,6 @@ vale insertar una imagen o una captura de pantalla, debe hacerse en formato *mar
 ```python
 # ALUMNE AMB FUNCIÓ LEEALUMNOS (FET A CLASSE)
 
-import re 
-
 class Alumno:
     """
     Clase usada para el tratamiento de las notas de los alumnos. Cada uno
@@ -295,24 +293,43 @@ class Alumno:
         completo y la nota media del alumno con un decimal.
         """
         return f'{self.numIden}\t{self.nombre}\t{self.media():.1f}'
-    
+
+import re 
+
 def leeAlumnos(ficAlumnos):
+    """
+    lee un fichero de texto con los datos de todos los alumnos y devuelve
+    un diccionario en el que la clave sea el nombre de cada alumno y su 
+    contenido el objeto Alumno correspondiente.
+    
+    >>> alumnos = leeAlumnos('alumnos.txt')
+    >>> for alumno in alumnos:
+    ...     print(alumnos[alumno])
+    """
+    
+    alumn = {}
     expr_id = r'\s*(?P<id>\d+)\s+'
     expr_nom = r'(?P<nom>[\w\s]+?)\s+'
     expr_notes = r'(?P<notes>[\d.\s]+)\s*'
-
-    expresion = re.compile(expr_id + expr_nom + expr_notes) #+ es una o más veces, * más
-    with open(ficAlumnos, 'rt') as fpAlumnos:
+    expresion = re.compile(expr_id + expr_nom + expr_notes) 
+    with open(ficAlumnos, 'rt', encoding='utf-8') as fpAlumnos: 
         for linea in fpAlumnos:
-            match = expresion.search(linea)
-            if match is not None:
-                print(match['id'])
-                print(match['nom'])
-                print(match['notes'])
+            match = expresion.match(linea.strip())
+            if match is not None: 
+                id = int(match['id'])
+                nom = match['nom']
+                notes = [float(nota) for nota in match['notes'].split()]
+                alumn[nom] = Alumno(nom, id, notes)
+    return alumn
+
+resultado = leeAlumnos('alumnos.txt')
+print(resultado)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod(optionflags=doctest.NORMALIZE_WHITESPACE)
 
 ```
-
-
 
 ```python
 # HORES NORMALITZACIÓ
